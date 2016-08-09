@@ -42,6 +42,7 @@ import org.apache.empire.db.expr.set.DBSetExpr;
 import org.apache.empire.exceptions.InternalException;
 import org.apache.empire.exceptions.MiscellaneousErrorException;
 import org.apache.empire.exceptions.ObjectNotValidException;
+import org.apache.empire.exceptions.NotSupportedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1128,6 +1129,19 @@ public abstract class DBCommand extends DBCommandExpr
         // End
         buf.append(")");
         return buf.toString();
+    }
+    
+    /**
+     * Creates the Insert or Update ("UPSERT") SQL-Command.
+     * 
+     * This depends on your Database (driver) and might not be supported.
+     * Check DBDatabaseDriver.isSupported(PERFORM_UPSERT)
+     * 
+     * @return the SQL-Command
+     */
+    public synchronized String getInsertOrUpdate()
+    {
+    	throw new NotSupportedException(this, "getInsertOrUpdate");
     }
     
     /**

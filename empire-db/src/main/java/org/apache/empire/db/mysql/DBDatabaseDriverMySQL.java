@@ -121,6 +121,17 @@ public class DBDatabaseDriverMySQL extends DBDatabaseDriver
             addWhere(buf);
             return buf.toString();
         }
+        
+        @Override
+        public synchronized String getInsertOrUpdate()
+        {
+        	StringBuilder buf = new StringBuilder(getInsert());
+        	buf.append(" ON DUPLICATE KEY UPDATE ");
+            long context = CTX_NAME | CTX_VALUE;
+            addListExpr(buf, set, context, ", ");
+        	return buf.toString();
+        }
+        
     }
     
     // Properties
@@ -571,6 +582,7 @@ public class DBDatabaseDriverMySQL extends DBDatabaseDriver
             case SEQUENCES:         return useSequenceTable;
             case QUERY_LIMIT_ROWS:  return true;
             case QUERY_SKIP_ROWS:   return true;
+            case PERFORM_UPSERT:    return true;
             default:
                 // All other features are not supported by default
                 return false;

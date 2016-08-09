@@ -28,5 +28,6 @@ public enum DBDriverFeature {
     CREATE_SCHEMA,
     SEQUENCES,
     QUERY_LIMIT_ROWS,
-    QUERY_SKIP_ROWS
+    QUERY_SKIP_ROWS,
+    PERFORM_UPSERT
 }

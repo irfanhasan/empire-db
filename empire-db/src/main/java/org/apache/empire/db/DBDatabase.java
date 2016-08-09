@@ -1387,6 +1387,34 @@ public abstract class DBDatabase extends DBObject
     }
 
     /**
+     * Executes an Insert or Update Statement from a command object
+     * 
+     * This depends on your Database (driver) and might not be supported.
+     * Check DBDatabaseDriver.isSupported(PERFORM_UPSERT)
+     * 
+     * @param cmd the command object containing the update command
+     * @param conn a valid connection to the database.
+     * @return the number of records that have been updated or inserted with the supplied statement
+     */
+    public final int executeInsertOrUpdate(DBCommand cmd, Connection conn)
+    {
+    	if (getDriver().isSupported(DBDriverFeature.PERFORM_UPSERT))
+    	{
+    		return executeSQL(cmd.getInsertOrUpdate(), cmd.getParamValues(), conn); 
+    	}
+    	else
+    	{
+    		log.warn("{} is not supported by your Database(driver). Falling back to two statements");
+    		int count = executeUpdate(cmd, conn);
+    		if (count < 1) {
+    			// nothing updated -> INSERT
+    			count += executeInsert(cmd, conn);
+    		}
+    		return count;
+    	}
+    }
+    
+    /**
      * Executes a Delete statement from a command object
      * @param from the database table from which to delete records
      * @param cmd the command object containing the delete constraints
