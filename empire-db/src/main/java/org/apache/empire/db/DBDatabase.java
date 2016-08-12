@@ -1387,10 +1387,11 @@ public abstract class DBDatabase extends DBObject
     }
 
     /**
-     * Executes an Insert or Update Statement from a command object
+     * Executes an UPDATE or INSERT Statement from a command object
      * 
-     * This depends on your Database (driver) and might not be supported.
-     * Check DBDatabaseDriver.isSupported(PERFORM_UPSERT)
+     * Depending on your database(driver) this might be supported
+     * in one single statement (Check DBDatabaseDriver.isSupported(PERFORM_UPSERT)),
+     * or as fallback with an UPDATE, followed by an INSERT if nothing was updated.
      * 
      * @param cmd the command object containing the update command
      * @param conn a valid connection to the database.
@@ -1400,11 +1401,10 @@ public abstract class DBDatabase extends DBObject
     {
     	if (getDriver().isSupported(DBDriverFeature.PERFORM_UPSERT))
     	{
-    		return executeSQL(cmd.getInsertOrUpdate(), cmd.getParamValues(), conn); 
+    		return executeSQL(cmd.getUpdateOrInsert(), cmd.getParamValues(), conn); 
     	}
     	else
     	{
-    		log.warn("{} is not supported by your Database(driver). Falling back to two statements");
     		int count = executeUpdate(cmd, conn);
     		if (count < 1) {
     			// nothing updated -> INSERT

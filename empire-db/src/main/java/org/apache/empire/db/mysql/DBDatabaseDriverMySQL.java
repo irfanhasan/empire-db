@@ -123,7 +123,7 @@ public class DBDatabaseDriverMySQL extends DBDatabaseDriver
         }
         
         @Override
-        public synchronized String getInsertOrUpdate()
+        public synchronized String getUpdateOrInsert()
         {
         	StringBuilder buf = new StringBuilder(getInsert());
         	buf.append(" ON DUPLICATE KEY UPDATE ");

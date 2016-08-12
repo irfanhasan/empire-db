@@ -1132,16 +1132,16 @@ public abstract class DBCommand extends DBCommandExpr
     }
     
     /**
-     * Creates the Insert or Update ("UPSERT") SQL-Command.
+     * Creates the INSERT or UPDATE ("UPSERT") SQL-Command.
      * 
-     * This depends on your Database (driver) and might not be supported.
+     * This depends on your Database(driver) and might not be supported.
      * Check DBDatabaseDriver.isSupported(PERFORM_UPSERT)
      * 
      * @return the SQL-Command
      */
-    public synchronized String getInsertOrUpdate()
+    public synchronized String getUpdateOrInsert()
     {
-    	throw new NotSupportedException(this, "getInsertOrUpdate");
+    	throw new NotSupportedException(this, "getUpdateOrInsert");
     }
     
     /**
