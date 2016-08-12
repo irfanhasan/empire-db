@@ -1397,7 +1397,7 @@ public abstract class DBDatabase extends DBObject
      * @param conn a valid connection to the database.
      * @return the number of records that have been updated or inserted with the supplied statement
      */
-    public final int executeInsertOrUpdate(DBCommand cmd, Connection conn)
+    public final int executeUpdateOrInsert(DBCommand cmd, Connection conn)
     {
     	if (getDriver().isSupported(DBDriverFeature.PERFORM_UPSERT))
     	{
