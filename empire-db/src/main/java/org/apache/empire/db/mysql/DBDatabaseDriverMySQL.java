@@ -125,10 +125,21 @@ public class DBDatabaseDriverMySQL extends DBDatabaseDriver
         @Override
         public synchronized String getUpdateOrInsert()
         {
+        	// Start with SELECT
         	StringBuilder buf = new StringBuilder(getInsert());
+        	// Add
         	buf.append(" ON DUPLICATE KEY UPDATE ");
-            long context = CTX_NAME | CTX_VALUE;
-            addListExpr(buf, set, context, ", ");
+    		for (int i = 0; i < this.set.size(); i++)
+    		{
+    			if (i > 0)
+    			{
+    				buf.append(", ");
+    			}
+    			buf.append(this.set.get(i).getColumn().getName());
+    			buf.append("=VALUES(");
+    			buf.append(this.set.get(i).getColumn().getName());
+    			buf.append(")");
+    		}
         	return buf.toString();
         }
         
