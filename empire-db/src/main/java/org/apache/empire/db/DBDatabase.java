@@ -40,6 +40,7 @@ import org.apache.empire.db.exceptions.QueryFailedException;
 import org.apache.empire.db.exceptions.QueryNoResultException;
 import org.apache.empire.db.exceptions.StatementFailedException;
 import org.apache.empire.db.expr.column.DBValueExpr;
+import org.apache.empire.db.expr.set.DBSetExpr;
 import org.apache.empire.exceptions.InternalException;
 import org.apache.empire.exceptions.InvalidArgumentException;
 import org.apache.empire.exceptions.ItemExistsException;
@@ -1405,6 +1406,16 @@ public abstract class DBDatabase extends DBObject
     	}
     	else
     	{
+    		// Add WHERE (<all pks> to UPDATE
+    		DBTable table = (DBTable) cmd.set.get(0).getTable();
+    		for (DBSetExpr se : cmd.set)
+    		{
+    			DBColumn column = se.column;
+    			if (table.getPrimaryKey().contains(column))
+    			{
+    				cmd.where(column.is(se.value));
+    			}
+    		}
     		int count = executeUpdate(cmd, conn);
     		if (count < 1) {
     			// nothing updated -> INSERT
