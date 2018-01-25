@@ -1,0 +1,12 @@
+language: java
+install:
+- bash install.sh
+script:
+- bash test.sh
+before_script:
+- bash pull.sh
+after_success:
+- bash push.sh
+env:
+  global:
+    secure: oWYAV2J/6Z/lL0tqGArXfrgy1+MWt4+7RJrkCFW9sQ6/65qx9wpJ1qi56XroYIWYPRaDSw4kpcetRGU1PWz/EFiMA2tIfym3XY1210IGP15qIvtXcdmXtLxFBOy4wHA6xswPTY+855fSOSvsAsl6rcd3vBU3outr83A+tmaxvXYEHT0P0hgwL6tbpWpN9XfsBmZU949FQThb6b7qA6ZdQJ4qzupbIJUVuitWC6rcCkUf5N0l0sxttStSy46sWnAVfoBBxWPmVA2OV0QDFy/gT/8an//tMiAIy8VX4MGuACpLmbwbVvP01zXk3BPYXA2Dbyxmr7lB/HHQC5lTbBBbyHgnTf7LU9CbfB1CRcSEnkZoHAnPEwH1DNKdHqEsS4s0SymKb7JjQ9yhX6Wye18rLZwRvI7/fXFwwaAATeMYLv06sRZLbxbTCC9U+25oiWnDieRmDciDBJncc6568ZAJx+US0khO1/CC0SuHlyoe63UF/8dCKuD4qKqh7w7FNBnU/NWQypCh0C4cVOoJSJjRDUkT2cJRGPDUQ6XVZmvC5J/CTa+dnuGJ3xWq5ksZt9gJ2PB6MdpLPTbmoBXvMRDZadjXqYmpnnGoWVQ6BuMoQIAylTnaLv+DvL1uFpR/v4BRCBvwj2ApYQcATnYremz7x1FQiFcsEl30EOA78UrGSSQ=
